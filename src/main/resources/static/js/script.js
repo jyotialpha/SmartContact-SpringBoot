@@ -115,6 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
+/*User Dashboard Sidebae*/
 const toggleSidebar =()=>{
     const sidebar = document.querySelector('.sidebar');
     const content = document.querySelector('.content');
@@ -127,4 +128,5 @@ const toggleSidebar =()=>{
     }
 };
 
+/*User Dashboard FileUploard*/
 
