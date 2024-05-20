@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="${title}">Smart Contact Manager</title>
+	<link rel="stylesheet" th:href="@{/style.css}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+	<section class="banner">
+		<div class="banner-content">
+			<h1 style="margin-bottom: 100px;">Smart Contact Manager</h1>
+			<p style="margin-bottom: 200px;">Start collecting your contacts in a smarter way. We provide very efficient
+				and smarter ways of handling
+				contacts.</p>
+			<a href="#" class="btn btn-lg">Get Started</a>
+		</div>
+	</section>
+
+	<section class="features">
+		<div class="container">
+			<h2 class="text-center">Why Choose Us?</h2>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="feature-item">
+						<div class="feature-img">
+							<img src="../img/use.png" alt="Security Icon">
+							<i class="fas fa-users"></i>
+							<h3>Easy to Use</h3>
+							<p>Our platform is designed to be user-friendly, making it easy for anyone to manage their
+								contacts.</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="feature-item">
+						<div class="feature-img">
+							<img src="../img/efficient.png" alt="Security Icon">
+							<i class="fas fa-cogs"></i>
+							<h3>Efficient</h3>
+							<p>We provide efficient tools and features to help you organize and access your contacts
+								quickly.</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="feature-item">
+						<div class="feature-img">
+							<img src="../img/security.png" alt="Security Icon">
+							<i class="fas fa-shield-alt"></i>
+							<h3>Secure</h3>
+							<p>Your data is safe with us. We prioritize the security and privacy of your contact
+								information.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="newsletter">
+		<div class="container">
+			<h2 class="text-center">Subscribe to Our Newsletter</h2>
+			<form class="subscribe-form">
+				<input type="email" placeholder="Enter your email address">
+				<button type="submit">Subscribe</button>
+			</form>
+		</div>
+	</section>
+
+	<div id="popup" class="popup">
+		<div class="popup-content">
+			<span class="close">&times;</span>
+			<p>This is a popup message!</p>
+		</div>
+	</div>
+
+	<script th:src="@{/script.js}"> </script>
+</body>
+
+</html>

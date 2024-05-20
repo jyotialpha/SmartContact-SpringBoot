@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="${title}">Smart Contact Manager</title>
+	<link rel="stylesheet" th:href="@{/style.css}">
+	<script th:src="@{/js/script.js}"></script>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+	<div class="background-container">
+		<img src="../img/icons8-sign-up-48.png" alt="Signup Image">
+		<section class="registration-form">
+			<form action="" id="signupForm" th:action="@{/do_register}" method="post" th:object="${user}"
+				onsubmit="return validateForm()">
+				<h2>
+					<img src="../img/icons8-sign-up-48.png" alt="Signup Image">
+					Signup
+				</h2>
+
+				<!--This is alret msg for Registration form-->
+				<div th:if="${session.message}" th:classappend="${session.message.errorType}" class="alert"
+					role="alert">
+					<p th:text="${session.message.errorMessage}"></p>
+				</div>
+
+				<!-- Full Name -->
+				<input type="text" class="form-control" th:classappend="${#fields.hasErrors('name') ? 'is-invalid':''}"
+					placeholder="Full Name*" name="name" th:field="*{name}" required>
+				<div class="invalid-feedback" th:each="e: ${#fields.errors('name')}" th:text="${e}"></div>
+
+
+				<!-- Email -->
+				<input type="email" class="form-control"
+					th:classappend="${#fields.hasErrors('email') ? 'is-invalid':''}" placeholder="Email*" name="email"
+					th:field="*{email}" required>
+				<div class="invalid-feedback" th:each="e: ${#fields.errors('email')}" th:text="${e}"></div>
+
+				<!-- Country Code -->
+				<label for="countryCode">Country Code*:</label>
+				<select id="countryCode" name="phonecode" required>
+					<option value="" disabled selected>Select Country Code </option>
+					<option th:each="entry : ${countryPhoneCodes}" th:value="${entry.value}" th:text="${entry.key}">
+					</option>
+				</select>
+
+				<!-- Phone Number -->
+				<input type="text" class="form-control"
+					th:classappend="${#fields.hasErrors('phoneNumber') ? 'is-invalid':''}" id="phoneNumberInput"
+					placeholder="Phone Number*" name="phoneNumber" required th:field="*{phoneNumber}">
+				<div class="invalid-feedback" th:each="e: ${#fields.errors('phoneNumber')}" th:text="${e}"></div>
+
+
+				<!-- Password -->
+				<input type="password" class="form-control"
+					th:classappend="${#fields.hasErrors('password') ? 'is-invalid':''}" id="password"
+					placeholder="Password*" name="password" required th:field="*{password}">
+				<div class="invalid-feedback" th:each="e: ${#fields.errors('password')}" th:text="${e}"></div>
+
+
+				<!-- Confirm Password -->
+				<input type="password" id="confirmPassword" placeholder="Confirm Password*" required>
+
+				<!-- Description -->
+				<textarea placeholder="Write something about yourself" rows="4" name="description"
+					th:field="*{description}"></textarea>
+
+				<!-- Agreement -->
+				<input type="checkbox" name="agreement" />
+				<label for="agreement">Accept terms and conditions</label>
+
+				<!-- Submit Button -->
+				<input type="submit" value="Signup">
+			</form>
+
+			<!-- Password Strength Indicators -->
+			<div id="password-message" style="display: none;">
+				<h3>Password must contain the following:</h3>
+				<p id="letter-icon" class="invalid">A <b>lowercase</b> letter</p>
+				<p id="capital-icon" class="invalid">A <b>capital (uppercase)</b> letter</p>
+				<p id="number-icon" class="invalid">A <b>number</b></p>
+				<p id="length-icon" class="invalid">Minimum <b>8 characters</b></p>
+			</div>
+		</section>
+	</div>
+</body>
+
+</html>
