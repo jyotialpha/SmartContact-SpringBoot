@@ -89,16 +89,16 @@ public class HomeController {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			
 			System.out.println("Agreement:" + agreement);
-			System.out.println("User:" + user);
+//			System.out.println("User:" + user);
 
 			this.userRepository.save(user);
 			model.addAttribute("user", new User());
 			session.setAttribute("message", new Message("Signup Successfully!!", "alert-success"));
-			System.out.println("Message set successfully!"); // Add this line for debugging
+//			System.out.println("Message set successfully!"); // Add this line for debugging
 
 			// Check if the message is being set correctly
 			Object msg = session.getAttribute("message");
-			System.out.println("Message: " + msg);
+//			System.out.println("Message: " + msg);
 
 			return "signup";
 		} catch (Exception e) {

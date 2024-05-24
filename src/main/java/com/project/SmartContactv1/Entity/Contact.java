@@ -1,13 +1,15 @@
 package com.project.SmartContactv1.Entity;
 
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "CONTACT")
@@ -15,13 +17,19 @@ public class Contact {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Id
 	private int cId;
+	@NotBlank(message = "Name is required")
+	@Size(min = 2, max = 20, message = "Name should be between 2 and 20 characters")
 	private String name;
 	private String secondName;
 	private String work;
+	@NotBlank(message = "Email is required")
+	@Email(message = "Email should be valid")
 	private String email;
+	@NotBlank(message = "Phone number is required")
+	@Pattern(regexp = "^\\d{10}$", message = "Phone number must be 10 digits")
 	private String phone;
 	private String image;
-	@Column(length = 500)
+	@NotBlank(message = "Description is required")
 	private String descrption;
 
 	@ManyToOne
@@ -170,6 +178,5 @@ public class Contact {
 	public Contact() {
 		super();
 	}
-	
-	
+
 }

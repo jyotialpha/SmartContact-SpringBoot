@@ -1,5 +1,12 @@
-{"properties": [{
-  "name": "restcountries.api.url",
-  "type": "java.lang.String",
-  "description": "A description for 'restcountries.api.url'"
-}]}
+{"properties": [
+  {
+    "name": "restcountries.api.url",
+    "type": "java.lang.String",
+    "description": "A description for 'restcountries.api.url'"
+  },
+  {
+    "name": "spring.thymeleaf.dialect",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.thymeleaf.dialect'"
+  }
+]}
