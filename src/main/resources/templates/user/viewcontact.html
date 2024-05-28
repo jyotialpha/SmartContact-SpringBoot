@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{user/userbase::layout(~{::section})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="${title}">About Page</title>
+
+</head>
+
+<body>
+
+	<section>
+		<div class="card mr-3 ml-3">
+			<div class="card-body">
+				<h1 class="text-center">Your Contacts</h1>
+				<table class="table table-hover table-dark">
+					<thead>
+						<tr>
+							<th scope="col">#Id</th>
+							<th scope="col">Name</th>
+							<th scope="col">Email</th>
+							<th scope="col">Phone</th>
+							<th scope="col">Action</th>
+
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="contact : ${contacts}">
+							<th scope="row" th:text="${'jrp'+contact.cId}"></th>
+							<td th:text="${contact.name}"></td>
+							<td th:text="${contact.email}"></td>
+							<td th:text="${contact.phone}"></td>
+							<td>
+								<button type="button" class="btn btn-primary">Update</button>
+								<button type="button" class="btn btn-danger">Delete</button>
+							</td>
+						</tr>
+
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+
+
+	</section>
+</body>
+
+</html>
+
+
+<!--<table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <!-- Add other fields as necessary -->
+<!--   </tr>
+        </thead>
+        <tbody>
+            <tr th:each="contact : ${contacts}">
+                <td th:text="${contact.name}"></td>
+                <td th:text="${contact.email}"></td>
+                <td th:text="${contact.phone}"></td>
+                
+                <!-- Add other fields as necessary -->
+<!-- </tr>
+        </tbody>
+    </table> -->

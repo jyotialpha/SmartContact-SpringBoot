@@ -37,9 +37,7 @@
 					<li class="nav-item">
 						<a class="nav-link text-light" th:href="@{/user/profile}">Profile</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link text-light" th:href="@{/logout}">Logout</a>
-					</li>
+					
 				</ul>
 			</div>
 		</div>
@@ -49,19 +47,19 @@
 	<!-- Sidebar -->
 	<div class="sidebar">
 		<span onclick="toggleSidebar()" class="crossBtn">&times;</span>
-		<a href="#" class="item"><i class="fa-solid fa-house"></i>Home</a>
-		<a href="#" class="item"><i class="fa-solid fa-address-card"></i>Contacts</a>
-		<a href="#" class="item"><i class="fa-solid fa-comments"></i>Messages</a>
-		<a href="#" class="item"><i class="fa-solid fa-gear"></i>Settings</a>
-		<a th:href="@{/user/add-contact}" class="item"><i class="fa-solid fa-file-signature"></i>Add Contact</a>
-		<a href="#" class="item"><i class="fa-solid fa-file-signature"></i>View Profile</a>
-		<a href="#" class="item"><i class="fa-solid fa-pen-to-square"></i>Edit Profile</a>
-		<a href="#" class="item"><i class="fa-solid fa-key"></i>Change Password</a>
-		<a href="#" class="item"><i class="fa-solid fa-bell"></i>Notifications</a>
-		<a href="#" class="item"><i class="fa-solid fa-shield-halved"></i>Privacy Settings</a>
-		<a href="#" class="item"><i class="fa-solid fa-hand-holding-hand"></i>Help & Support</a>
+		<a href="#" class="item"><i class="fa-solid fa-house"></i> Home</a>
+		<a href="#" class="item"><i class="fa-solid fa-address-card"></i> Contacts</a>
+		<a href="#" class="item"><i class="fa-solid fa-comments"></i> Messages</a>
+		<a href="#" class="item"><i class="fa-solid fa-gear"></i> Settings</a>
+		<a th:href="@{/user/add-contact}" class="item"><i class="fa-solid fa-file-signature"></i> Add Contact</a>
+		<a th:href="@{/user/viewcontact}" class="item"><i class="fa-solid fa-file-signature"></i> View Contacts</a>
+		<a href="#" class="item"><i class="fa-solid fa-pen-to-square"></i> Edit Profile</a>
+		<a href="#" class="item"><i class="fa-solid fa-key"></i> Change Password</a>
+		<a href="#" class="item"><i class="fa-solid fa-bell"></i> Notifications</a>
+		<a href="#" class="item"><i class="fa-solid fa-shield-halved"></i> Privacy Settings</a>
+		<a href="#" class="item"><i class="fa-solid fa-hand-holding-hand"></i> Help & Support</a>
 		<div class="divider"></div>
-		<a  th:href="@{/logout}" class="item"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+		<a  th:href="@{/logout}" class="item"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
 	</div>
 	<!-- End Sidebar -->
 

@@ -1,15 +1,14 @@
 package com.project.SmartContactv1.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class CountryPhoneCodeService {
-    private static final String API_URL = "http://country.io/phone.json";
-
+    private static final String API_URL = "https://country.io/names.json";
 
     private final RestTemplate restTemplate;
 
@@ -18,16 +17,14 @@ public class CountryPhoneCodeService {
     }
 
     @SuppressWarnings("unchecked")
-    public Map<String, String> getCountryPhoneCodes() {
-        Map<String, String> countryCodeToPhoneCode = restTemplate.getForObject(API_URL, Map.class);
-        Map<String, String> phoneCodeToCountryCode = new HashMap<>();
-
-        // Switch keys and values
-        //i swip the key and value to get codes 
-        for (Map.Entry<String, String> entry : countryCodeToPhoneCode.entrySet()) {
-            phoneCodeToCountryCode.put(entry.getValue(), entry.getKey());
+	public Map<String, String> getCountryPhoneCodes() {
+        try {
+            // Fetch data from the API
+            return restTemplate.getForObject(API_URL, Map.class);
+        } catch (Exception e) {
+            // Handle any exceptions, such as network errors or invalid response
+            e.printStackTrace();
+            return new HashMap<>(); // Return an empty map or handle the error appropriately
         }
-
-        return phoneCodeToCountryCode;
     }
 }

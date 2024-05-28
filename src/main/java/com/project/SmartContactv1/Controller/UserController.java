@@ -1,8 +1,16 @@
 package com.project.SmartContactv1.Controller;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.SmartContactv1.Entity.Contact;
@@ -23,60 +33,88 @@ import jakarta.validation.Valid;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Autowired
-    private ContactRepository contactRepository;
+	@Autowired
+	private ContactRepository contactRepository;
 
-    @ModelAttribute
-    public void addCommonData(Model model, Principal principal) {
-        String userName = principal.getName();
-        User user = userRepository.getUserByEmail(userName);
-        model.addAttribute("user", user);
-    }
+	@ModelAttribute
+	public void addCommonData(Model model, Principal principal) {
+		String userName = principal.getName();
+		User user = userRepository.getUserByEmail(userName);
+		model.addAttribute("user", user);
+	}
 
-    @RequestMapping("/index")
-    public String dashboard(Model model, Principal principal) {
-        return "user/user_dashboard";
-    }
+	@RequestMapping("/index")
+	public String dashboard(Model model, Principal principal) {
+		return "user/user_dashboard";
+	}
 
-    @GetMapping("/add-contact")
-    public String addContactForm(Model model) {
-        model.addAttribute("title", "Add Contact");
-        model.addAttribute("contact", new Contact());
-        return "user/addContact_form";
-    }
+	@GetMapping("/add-contact")
+	public String addContactForm(Model model) {
+		model.addAttribute("title", "Add Contact");
+		model.addAttribute("contact", new Contact());
+		return "user/addContact_form";
+	}
 
-    @PostMapping("/process-contact")
-    public String processContact(@Valid @ModelAttribute Contact contact, BindingResult bindingResult,
-            Principal principal, Model model,RedirectAttributes redirectAttributes) {
+	@PostMapping("/process-contact")
+	public String processContact(@Valid @ModelAttribute Contact contact,
+			@RequestParam("profileImage") MultipartFile multipartFile, BindingResult bindingResult, Principal principal,
+			Model model, RedirectAttributes redirectAttributes) {
 
-        if (bindingResult.hasErrors()) {
-            // If there are validation errors, return to the form view with error messages
-            model.addAttribute("title", "Add Contact");
-            return "user/addContact_form";
-        }
+		if (bindingResult.hasErrors()) {
+			// If there are validation errors, return to the form view with error messages
+			model.addAttribute("title", "Add Contact");
+			return "user/addContact_form";
+		}
 
-        try {
-            // Retrieve the user
-            String name = principal.getName();
-            User user = this.userRepository.getUserByEmail(name);
+		try {
+			// Retrieve the user
+			String name = principal.getName();
 
-            // Set the user for the contact
-            contact.setUser(user);
+			// .................upload the contact image...............
+			contact.setImage(multipartFile.getOriginalFilename());
+			File saveFile = new ClassPathResource("static/img").getFile();
+			// generate unique file name
+			long uniquename = System.currentTimeMillis();
+			Path path = Paths
+					.get(saveFile.getPath() + File.pathSeparator + multipartFile.getOriginalFilename() + uniquename);
 
-            // Save the contact
-            this.contactRepository.save(contact);
-            
+			Files.copy(multipartFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+//			System.out.println("image is uploaded");
+			// ................End upload the contact image..............
 
-            redirectAttributes.addFlashAttribute("message", "Contact added successfully");
-            return "redirect:/user/add-contact"; // Redirect to the add-contact page after successful submission
-        } catch (Exception e) {
-            // Handle exceptions here
-            e.printStackTrace();
-            redirectAttributes.addFlashAttribute("error", "An error occurred while adding the contact");
-            return "user/addContact_form";
-        }
-    }
+			User user = this.userRepository.getUserByEmail(name);
+
+			// Set the user for the contact
+			contact.setUser(user);
+
+			// Save the contact
+			this.contactRepository.save(contact);
+
+			redirectAttributes.addFlashAttribute("message", "Contact added successfully");
+			return "redirect:/user/add-contact"; // Redirect to the add-contact page after successful submission
+		} catch (Exception e) {
+			// Handle exceptions here
+			e.printStackTrace();
+			redirectAttributes.addFlashAttribute("error", "An error occurred while adding the contact");
+			return "user/addContact_form";
+		}
+	}
+
+	//view all contact by useer id
+	@GetMapping("/viewcontact")
+	public String viewContact(Model model, Principal principal) {
+		model.addAttribute("title", "ViewContact");
+
+		String email = principal.getName();
+		User user = userRepository.getUserByEmail(email);
+		List<Contact> contacts = contactRepository.findByUserId(user.getId());
+		model.addAttribute("contacts", contacts);
+
+		return "user/viewcontact";
+
+	}
+
 }
