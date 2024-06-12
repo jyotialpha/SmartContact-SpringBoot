@@ -40,6 +40,26 @@
 
 					</tbody>
 				</table>
+				<!--Pagination-->
+				<nav aria-label="Page navigation example">
+					<ul class="pagination">
+						<li class="page-item">
+							<a class="page-link" href="#"
+								th:href="@{${currentPage !=0} ? (${currentPage - 1}) : ''}">Previous</a>
+						</li>
+						<li th:each="i : ${#numbers.sequence(1, totalPages)}"
+							th:classappend="${currentPage == i-1} ? 'active' : ''" class="page-item">
+							<a class="page-link" th:href="@{(${i-1})}">
+								<span th:text="${i}"></span>
+							</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#"
+								th:href="@{${currentPage!=totalPages} ?(${currentPage + 1}) : ''}">Next</a>
+						</li>
+					</ul>
+				</nav>
+
 
 			</div>
 		</div>
@@ -49,24 +69,3 @@
 </body>
 
 </html>
-
-
-<!--<table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <!-- Add other fields as necessary -->
-<!--   </tr>
-        </thead>
-        <tbody>
-            <tr th:each="contact : ${contacts}">
-                <td th:text="${contact.name}"></td>
-                <td th:text="${contact.email}"></td>
-                <td th:text="${contact.phone}"></td>
-                
-                <!-- Add other fields as necessary -->
-<!-- </tr>
-        </tbody>
-    </table> -->

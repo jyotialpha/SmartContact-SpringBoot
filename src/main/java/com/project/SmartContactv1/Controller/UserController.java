@@ -6,16 +6,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -104,17 +104,21 @@ public class UserController {
 	}
 
 	//view all contact by useer id
-	@GetMapping("/viewcontact")
-	public String viewContact(Model model, Principal principal) {
-		model.addAttribute("title", "ViewContact");
+	@GetMapping("/viewcontact/{page}")
+	public String viewContact(@PathVariable("page") Integer page, Model model, Principal principal) {
+	    model.addAttribute("title", "ViewContact");
 
-		String email = principal.getName();
-		User user = userRepository.getUserByEmail(email);
-		List<Contact> contacts = contactRepository.findByUserId(user.getId());
-		model.addAttribute("contacts", contacts);
+	    String email = principal.getName();
+	    User user = userRepository.getUserByEmail(email);
 
-		return "user/viewcontact";
+	    PageRequest pageable = PageRequest.of(page, 1); // Note: page number starts from 0
+	    Page<Contact> contacts = contactRepository.findByUserId(user.getId(), pageable);
+	    
+	    model.addAttribute("contacts", contacts);
+	    model.addAttribute("currentPage", page);
+	    model.addAttribute("totalPages", contacts.getTotalPages());
 
+	    return "user/viewcontact";
 	}
 
 }

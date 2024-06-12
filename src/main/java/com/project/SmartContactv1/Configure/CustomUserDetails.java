@@ -11,6 +11,10 @@ import com.project.SmartContactv1.Entity.User;
 
 public class CustomUserDetails implements UserDetails {
 
+	/**
+	 *Created by Jyoti 
+	 */
+	private static final long serialVersionUID = 1L;
 	private User user;
 
 	public CustomUserDetails(User user) {

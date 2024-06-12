@@ -97,6 +97,7 @@ public class HomeController {
 //			System.out.println("Message set successfully!"); // Add this line for debugging
 
 			// Check if the message is being set correctly
+			@SuppressWarnings("unused")
 			Object msg = session.getAttribute("message");
 //			System.out.println("Message: " + msg);
 
